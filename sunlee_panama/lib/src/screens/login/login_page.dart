@@ -2,7 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:sunlee_panama/src/models/clients_model.dart';
+import 'package:sunlee_panama/src/providers/client_provider.dart';
 import 'package:sunlee_panama/src/services/http/http_handler.dart';
+import 'package:sunlee_panama/src/services/store/secure_store.dart';
+import 'package:sunlee_panama/src/utils/error_handler.dart';
 import 'package:sunlee_panama/src/widgets/loading_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -113,6 +118,9 @@ class _LoginPageState extends State<LoginPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () async {
+                    setState(() {
+                      _pending = true;
+                    });
                     bool _validate = await show(context, _email, _password);
                     if (_validate) {
                       Navigator.pushReplacementNamed(
@@ -120,6 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                         '/home',
                       );
                     }
+                    setState(() {
+                      _pending = false;
+                    });
                   },
                   child: Text('Ingresar'),
                 ),
@@ -188,12 +199,45 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 Future<bool> show(BuildContext context, _email, _password) async {
+  if (_email == null || _email == '') {
+    Fluttertoast.showToast(
+      msg: 'Ingrese su usuario',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    return false;
+  }
+  if (_password == null || _password == '') {
+    Fluttertoast.showToast(
+      msg: 'Ingrese su Contraseña',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    return false;
+  }
   final request = Request(
-      url: 'auth/login.php',
+      url: 'auth/client.php',
       token: '',
-      body: '{"user": "$_email","pass": "$_password"}');
-  final response = jsonDecode(await request.execute('POST'));
-  if (response['message'] == 'ok') {
+      body:
+          '{"action":"login","client_mail": "$_email","password": "$_password"}');
+  final response = jsonDecode(await request.execute('POST', (e) {
+    ToastErrorHandler('Error de conexión');
+  }));
+  if (response['error'] == '') {
+    StoreData storage = StoreData();
+    storage.storeJwt('Bearer ' + response['token']);
+    storage.save('client_name', response['data']['client_name']);
+    storage.save('id_client', response['data']['id_client']);
+    var ClientData = Provider.of<ClientNotifier>(context, listen: false);
+    ClientData.updateUser(Client.fromJson(response['data']));
     return true;
   } else {
     Fluttertoast.showToast(msg: 'Se produjo un Error!');
