@@ -13,10 +13,6 @@ class CustomNavigationBar extends StatelessWidget {
       label: 'Home',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.shopping_cart),
-      label: 'Carrito',
-    ),
-    BottomNavigationBarItem(
       icon: Icon(Icons.list_alt),
       label: 'Pedidos',
     ),
@@ -27,7 +23,6 @@ class CustomNavigationBar extends StatelessWidget {
   ];
   final List<String> _routes = [
     '/home',
-    '/cart',
     '/orders',
     '/profile',
   ];
@@ -36,11 +31,9 @@ class CustomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       selectedItemColor: Colors.red,
-      unselectedItemColor: Colors.black26,
-      showUnselectedLabels: true,
+      unselectedItemColor: Colors.grey,
       currentIndex: _currentIndex,
-      backgroundColor: Colors.white30,
-      type: BottomNavigationBarType.shifting,
+      backgroundColor: Colors.grey[100],
       items: items,
       onTap: (index) {
         if (_currentIndex != index) {

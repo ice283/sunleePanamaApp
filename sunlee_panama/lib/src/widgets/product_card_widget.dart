@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sunlee_panama/src/models/cart_model.dart';
 import 'package:sunlee_panama/src/models/products_model.dart';
 import 'package:sunlee_panama/src/providers/cart_provider.dart';
 import 'package:sunlee_panama/src/utils/common.functions.dart';
@@ -70,7 +73,21 @@ Widget ProductGridCard(BuildContext context, Product product) {
                     ),
                     IconButton(
                         onPressed: () {
-                          cartData.addItem(product);
+                          cartData.addItem(CartItem(
+                            idCart: '0',
+                            idProduct: product.idProduct,
+                            productName: product.productName,
+                            price: product.productSalePrice,
+                            image: product.getImgUrl(),
+                            quantity: 1,
+                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Agregado A la Cesta ${product.productName}'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
                         },
                         icon: Icon(Icons.add_shopping_cart)),
                   ],
