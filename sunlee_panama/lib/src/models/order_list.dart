@@ -1,23 +1,19 @@
 import 'dart:convert';
-import 'package:uuid/uuid.dart';
 
 class OrderDocument {
   List<OrderItem> _items = [];
   double _totalDocument = 0.0;
   late int id;
   late String idClient;
-  late String clientName;
   late String dateOrder;
   late String idSeller;
-  late String sellerName;
   late int status_send;
+
   OrderDocument({
     required this.id,
     required this.idClient,
-    required this.clientName,
     required this.dateOrder,
     required this.idSeller,
-    required this.sellerName,
     required this.status_send,
   });
 
@@ -25,13 +21,16 @@ class OrderDocument {
     return _totalDocument;
   }
 
+  void addItem(OrderItem item) {
+    _items.add(item);
+    _totalDocument += item.subtotalProduct;
+  }
+
   OrderDocument.fromJsonMap(Map<String, dynamic> json) {
     id = json['id'] as int;
     idClient = json['idClient'].toString();
-    clientName = json['clientName'].toString();
     dateOrder = json['dateOrder'].toString();
     idSeller = json['idSeller'].toString();
-    sellerName = json['sellerName'].toString();
     _totalDocument = json['totalDocument'].toDouble();
     status_send = json['status_send'] as int;
   }
@@ -39,12 +38,10 @@ class OrderDocument {
   Map<String, dynamic> toJson() => {
         'id': id,
         'idClient': idClient,
-        'clientName': clientName,
         'dateOrder': dateOrder,
         'idSeller': idSeller,
-        'sellerName': sellerName,
         'totalDocument': _totalDocument,
-        'items': [],
+        'items': _items.map((e) => e.toJson()).toList(),
       };
 }
 

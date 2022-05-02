@@ -27,25 +27,25 @@ class Client {
     required this.password,
   });
 
-  final String idClient;
-  final String codeClient;
-  final String clientName;
-  final String clientRuc;
-  final String clientDv;
-  final String clientMail;
-  final String clientPhotoUrl;
-  final dynamic clientAddress;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final dynamic token;
-  final String contactName;
-  final String clientStatus;
-  final String lastlogin;
-  final String clientCreditDays;
-  final DateTime topSale;
-  final String active;
-  final String appClient;
-  final String password;
+  String idClient;
+  String codeClient;
+  String clientName;
+  String clientRuc;
+  String clientDv;
+  String clientMail;
+  String clientPhotoUrl;
+  dynamic clientAddress;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic token;
+  String contactName;
+  String clientStatus;
+  String lastlogin;
+  String clientCreditDays;
+  DateTime topSale;
+  String active;
+  String appClient;
+  String password;
 
   factory Client.fromJson(Map<String, dynamic> json) => Client(
         idClient: json["id_client"] == null ? '' : json["id_client"],

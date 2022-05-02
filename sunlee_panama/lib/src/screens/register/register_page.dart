@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sunlee_panama/src/services/request/client_service.dart';
+import 'package:sunlee_panama/src/utils/error_handler.dart';
+import 'package:sunlee_panama/src/utils/validator_fn.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -17,6 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String _responseBody = '';
   String _error = '';
   bool _pending = false;
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,9 @@ class _RegisterPageState extends State<RegisterPage> {
               Expanded(
                 child: ElevatedButton(
                   child: Text('Registrarse'),
-                  onPressed: () {},
+                  onPressed: () {
+                    _submit();
+                  },
                 ),
               ),
               SizedBox(
@@ -68,52 +75,71 @@ class _RegisterPageState extends State<RegisterPage> {
               image: AssetImage('assets/images/logo.png'),
             ),
           ),
-          RegisterFormInput('Nombre:', Icons.person_sharp, (m) => print(m)),
-          RegisterFormInput('Compañia:', Icons.business, (m) => print(m)),
-          RegisterFormInput('Correo Electronico:', Icons.mail, (m) => print(m)),
-          RegisterFormInput('Clave:', Icons.person_sharp, (m) => print(m),
-              password: true, obscureText: _showPassword),
-          RegisterFormInput(
-              'Repetir Clave:', Icons.person_sharp, (m) => print(m),
-              password: false, obscureText: _showPassword),
+          Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  RegisterFormInput(
+                    'Nombre:',
+                    Icons.person_sharp,
+                    (m) => _contactName = m,
+                    (m) => notEmpty(m) ? null : 'El nombre es Requerido',
+                  ),
+                  RegisterFormInput(
+                    'Compañia:',
+                    Icons.business,
+                    (m) => _companyName = m,
+                    (m) => notEmpty(m) ? null : 'La Compania es Requerido',
+                  ),
+                  RegisterFormInput(
+                    'Correo Electronico:',
+                    Icons.mail,
+                    (m) => _email = m,
+                    (m) => isEmail(m) ? null : 'Correo invalido',
+                  ),
+                  RegisterFormInput(
+                    'Clave:',
+                    Icons.person_sharp,
+                    (m) => _password = m,
+                    (m) => notEmpty(m) ? null : 'No puede estar vacio',
+                    password: true,
+                    obscureText: _showPassword,
+                  ),
+                  RegisterFormInput(
+                    'Repetir Clave:',
+                    Icons.person_sharp,
+                    (m) => _repeatPassword = m,
+                    (m) => compare(m, _password)
+                        ? null
+                        : 'las claves no coinciden',
+                    password: false,
+                    obscureText: _showPassword,
+                  ),
+                ],
+              )),
           SizedBox(
             height: 20.0,
           ),
-          /* Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 50.0,
-                  ),
-                ),
-                ElevatedButton(
-                  child: Text('Restablecer'),
-                  onPressed: () {
-                    _showPassword = false;
-                    _companyName = '';
-                    _contactName = '';
-                    _email = '';
-                    _password = '';
-                    _repeatPassword = '';
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
-          ), */
         ],
       ),
     );
   }
 
-  Widget RegisterFormInput(String title, IconData icon, Function callback,
-      {bool password = false, bool obscureText = false}) {
+  Widget RegisterFormInput(
+    String title,
+    IconData icon,
+    Function callback,
+    Function validate, {
+    bool password = false,
+    bool obscureText = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: TextFormField(
         obscureText: obscureText,
+        validator: (value) {
+          return validate(value);
+        },
         decoration: InputDecoration(
           suffixIcon: (!password)
               ? null
@@ -141,5 +167,20 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       ),
     );
+  }
+
+  void _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    ClientService clientService = ClientService();
+    setState(() {
+      _pending = true;
+    });
+    if (await clientService.registerClient(
+        _email, _password, _contactName, _contactName)) {
+      setState(() {
+        _pending = false;
+      });
+      Navigator.pop(context);
+    }
   }
 }

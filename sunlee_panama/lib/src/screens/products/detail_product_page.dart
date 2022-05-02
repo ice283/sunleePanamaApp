@@ -11,9 +11,6 @@ class DetailProductPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('DetailProductPage'),
-        actions: [
-          CartIconCounter(),
-        ],
       ),
       body: Center(
         child: Hero(

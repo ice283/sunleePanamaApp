@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sunlee_panama/src/providers/navigation_provider.dart';
 
 class CustomNavigationBar extends StatelessWidget {
-  final int _currentIndex;
-  CustomNavigationBar(
-    this._currentIndex, {
-    Key? key,
-  }) : super(key: key);
-
   final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
       icon: Icon(Icons.home),
@@ -14,30 +10,25 @@ class CustomNavigationBar extends StatelessWidget {
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.list_alt),
-      label: 'Pedidos',
+      label: 'Balance',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.person),
       label: 'Perfil',
     ),
   ];
-  final List<String> _routes = [
-    '/home',
-    '/orders',
-    '/profile',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var navigation = Provider.of<NavigationProvider>(context, listen: true);
     return BottomNavigationBar(
       selectedItemColor: Colors.red,
       unselectedItemColor: Colors.grey,
-      currentIndex: _currentIndex,
+      currentIndex: navigation.currentIndex,
       backgroundColor: Colors.grey[100],
       items: items,
       onTap: (index) {
-        if (_currentIndex != index) {
-          Navigator.pushReplacementNamed(context, _routes[index]);
+        if (index != navigation.currentIndex) {
+          navigation.currentIndexUpdate = index;
         }
       },
     );

@@ -47,6 +47,7 @@ dependencies:
   share_files_and_screenshot_widgets: ^1.0.6
   barcode_scan2: ^4.2.0
   badges: ^2.0.2
+  socket_io_client: ^1.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

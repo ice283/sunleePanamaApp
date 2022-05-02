@@ -5,40 +5,36 @@ import 'package:sunlee_panama/src/services/request/products_service.dart';
 import 'package:sunlee_panama/src/widgets/loading_widget.dart';
 import 'package:sunlee_panama/src/widgets/product_card_widget.dart';
 
-class GridProductBuilder extends StatelessWidget {
+class productList extends StatefulWidget {
+  @override
+  State<productList> createState() => _productListState();
+}
+
+class _productListState extends State<productList>
+    with AutomaticKeepAliveClientMixin<productList> {
   @override
   Widget build(BuildContext context) {
     var searching = Provider.of<SearchingProvider>(context, listen: true);
     ProductsService productsService = ProductsService();
-    return FutureBuilder(
-      future: productsService.searchProducts(searching.searchingData),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingWidget();
-        }
-        if (snapshot.hasData) {
-          final products = snapshot.data;
-          return GridView.builder(
+    return (searching.isSearching)
+        ? LoadingWidget(
+            text: 'Loading...',
+          )
+        : GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 5.0,
               crossAxisSpacing: 5.0,
               childAspectRatio: 0.70,
               crossAxisCount: 2,
             ),
-            itemCount: products.length,
+            itemCount: searching.products.length,
             padding: EdgeInsets.all(8.0),
             itemBuilder: (BuildContext context, int index) {
-              return ProductGridCard(context, products[index]);
+              return ProductGridCard(context, searching.products[index]);
             },
           );
-        } else {
-          return Center(
-            child: LoadingWidget(
-              text: 'Cargando Productos...',
-            ),
-          );
-        }
-      },
-    );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

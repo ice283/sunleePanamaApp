@@ -4,10 +4,8 @@ import 'package:sunlee_panama/src/screens/cart/cart_page.dart';
 import 'package:sunlee_panama/src/screens/home/home_page.dart';
 import 'package:sunlee_panama/src/screens/loading/loading_page.dart';
 import 'package:sunlee_panama/src/screens/login/login_page.dart';
-import 'package:sunlee_panama/src/screens/logout/logout_screen.dart';
-import 'package:sunlee_panama/src/screens/orders/order_page.dart';
+import 'package:sunlee_panama/src/screens/orders/document_page.dart';
 import 'package:sunlee_panama/src/screens/products/detail_product_page.dart';
-import 'package:sunlee_panama/src/screens/profile/profile_page.dart';
 import 'package:sunlee_panama/src/screens/register/register_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -30,10 +28,9 @@ class MyApp extends StatelessWidget {
             ),
         '/register': (BuildContext context) => RegisterPage(),
         '/home': (BuildContext context) => HomePage(),
-        '/profile': (BuildContext context) => ProfilePage(),
         '/detailProduct': (BuildContext context) => DetailProductPage(),
         '/cart': (BuildContext context) => CartSumaryPage(),
-        '/orders': (BuildContext context) => OrderPage(),
+        '/document': (BuildContext context) => DocumentPage(),
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:http/http.dart' as http;
@@ -10,15 +11,18 @@ class Request {
   late String data = '';
   late String url;
   late String token;
-  late String body = '';
+  dynamic body = '';
   String _baseurl = 'http://192.168.10.147/well/sunlee/api/';
   //String _baseurl = 'http://186.188.172.22/sunlee/api/';
 
   Request({
     required this.url,
     required this.token,
-    this.body = '',
   });
+
+  set setBody(dynamic value) {
+    body = json.encode(value).toString();
+  }
 
   Future<String> getData({required String url, String? token}) async {
     http.Response response = await http.get(Uri.parse(this._baseurl + url),
@@ -41,7 +45,7 @@ class Request {
   Future<String> postData(
       {required String url,
       required String token,
-      required String body}) async {
+      required dynamic body}) async {
     http.Response response = await http
         .post(Uri.parse(this._baseurl + url),
             headers: {
@@ -56,7 +60,7 @@ class Request {
   Future<String> putData(
       {required String url,
       required String token,
-      required String body}) async {
+      required dynamic body}) async {
     http.Response response = await http
         .put(Uri.parse(this._baseurl + url),
             headers: {
@@ -76,10 +80,10 @@ class Request {
     } else if (response.statusCode == 401) {
       final StoreData storeJwt = StoreData();
       storeJwt.deleteAllData();
-      final _data = errorResponse.toString();
+      final _data = response.body.toString();
       return _data;
     } else {
-      final _data = errorResponse.toString();
+      final _data = response.body.toString();
       return _data;
     }
   }

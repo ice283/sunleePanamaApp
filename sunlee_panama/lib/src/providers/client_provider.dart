@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sunlee_panama/src/models/clients_model.dart';
 import 'package:sunlee_panama/src/services/http/http_handler.dart';
+import 'package:sunlee_panama/src/services/request/client_service.dart';
 import 'package:sunlee_panama/src/services/store/secure_store.dart';
 import 'package:sunlee_panama/src/utils/error_handler.dart';
 
@@ -51,10 +52,8 @@ class ClientNotifier extends ChangeNotifier {
   }
 
   Future<bool> getClientDataFromServer(String token) async {
-    final request = Request(url: 'auth/client.php', token: token, body: '{}');
-    final response = jsonDecode(await request.execute('GET', (e) {
-      ToastErrorHandler('Error de conexión');
-    }));
+    ClientService _clientService = ClientService();
+    final response = await _clientService.getClientDataFromServer(token);
     if (response['message'] == 'ok') {
       Client clientData = Client.fromJson(response['data']);
       updateUser(clientData);
@@ -64,5 +63,29 @@ class ClientNotifier extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'idClient': idClient,
+      'codeClient': codeClient,
+      'clientName': clientName,
+      'clientRuc': clientRuc,
+      'clientDv': clientDv,
+      'clientMail': clientMail,
+      'clientPhotoUrl': clientPhotoUrl,
+      'clientAddress': clientAddress,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'token': token,
+      'contactName': contactName,
+      'clientStatus': clientStatus,
+      'lastlogin': lastlogin,
+      'clientCreditDays': clientCreditDays,
+      'topSale': topSale,
+      'active': active,
+      'appClient': appClient,
+      'password': password,
+    };
   }
 }

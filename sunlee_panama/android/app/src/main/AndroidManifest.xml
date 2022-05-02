@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prototypesoftgroup.sunleePanama">
+    <uses-permission android:name="android.permission.VIBRATE"/>
+   <uses-permission android:name="android.permission.CAMERA" />
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="sunlee_panama"
+        android:label="sunlee panama"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

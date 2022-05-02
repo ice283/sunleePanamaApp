@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sunlee_panama/src/providers/cart_provider.dart';
+import 'package:sunlee_panama/src/providers/client_provider.dart';
 import 'package:sunlee_panama/src/utils/common.functions.dart';
-import 'package:sunlee_panama/src/widgets/botton_navigation_bar.dart';
 import 'package:sunlee_panama/src/widgets/confirm_widget.dart';
 
 class CartSumaryPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class CartSumaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartNotifier = Provider.of<CartNotifier>(context, listen: true);
-    print(cartNotifier.items);
+    final client = Provider.of<ClientNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Resumen de Pedido'),
@@ -25,47 +25,53 @@ class CartSumaryPage extends StatelessWidget {
             children: [
               Text('Total: \$ ' + numberFormat(cartNotifier.cart.totalCart),
                   style: TextStyle(fontSize: 20, color: Colors.black)),
-              FittedBox(
-                child: RawMaterialButton(
-                  padding: EdgeInsets.all(8),
-                  fillColor: Colors.red,
-                  textStyle: TextStyle(color: Colors.white),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  onPressed: (cartNotifier.items == 0)
-                      ? null
-                      : () async {
-                          final confirm = await showConfirm(
-                              context,
-                              'Confirmar Pedido',
-                              'Se enviara su solicitud de pedido a Sunlee Panama para su procesamiento. ¿Desea continuar?');
-                          if (confirm) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Pedido Enviado...'),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                            cartNotifier.emptyCart();
-                          }
-                          //Navigator.of(context).pushNamed('/checkout');
-                        },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text('Enviar Pedido'),
-                      Icon(Icons.check_circle_outline_rounded),
-                    ],
-                  ),
-                ),
-              ),
+              (cartNotifier.cart.items == 0)
+                  ? SizedBox(
+                      width: 20,
+                    )
+                  : FittedBox(
+                      child: RawMaterialButton(
+                        padding: EdgeInsets.all(8),
+                        fillColor: Colors.red,
+                        textStyle: TextStyle(color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        onPressed: (cartNotifier.items == 0)
+                            ? null
+                            : () async {
+                                final confirm = await showConfirm(
+                                    context,
+                                    'Confirmar Pedido',
+                                    'Se enviara su solicitud de pedido a Sunlee Panama para su procesamiento. ¿Desea continuar?');
+                                if (confirm) {
+                                  cartNotifier.setClient(client.idClient);
+                                  final response =
+                                      await cartNotifier.sendOrder();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Pedido Enviado...'),
+                                      duration: Duration(seconds: 1),
+                                    ),
+                                  );
+                                  cartNotifier.emptyCart();
+                                }
+                                //Navigator.of(context).pushNamed('/checkout');
+                              },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text('Enviar Pedido'),
+                            Icon(Icons.check_circle_outline_rounded),
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(1),
       body: (cartNotifier.items == 0)
           ? Center(
               child: Text('No hay productos en el carrito'),

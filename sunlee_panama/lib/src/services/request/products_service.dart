@@ -11,13 +11,12 @@ class ProductsService {
   int _page = 1;
   int _rowsPerPage = 100;
 
-  Future<List<Product>> getProducts(context, String? filter) async {
+  Future<List<Product>> getProducts(String? filter) async {
     StoreData storage = StoreData();
     final response = Request(
         url:
             'products/products_update_v220418.php?order=$filter&limit=$_limit,$_rowsPerPage',
-        token: await storage.readKey('jwt'),
-        body: '{}');
+        token: await storage.readKey('jwt'));
     final decoded = json.decode(await response.execute('GET', (e) {
       ToastErrorHandler('Error de conexión');
     }));
@@ -30,12 +29,11 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> searchProducts(context, String search) async {
+  Future<List<Product>> searchProducts(String search) async {
     StoreData storage = StoreData();
     final response = Request(
-        url:'products/products_update_v220418.php?search=$search',
-        token: await storage.readKey('jwt'),
-        body: '{}');
+        url: 'products/products_update_v220418.php?search=$search',
+        token: await storage.readKey('jwt'));
     final decoded = json.decode(await response.execute('GET', (e) {
       ToastErrorHandler('Error de conexión');
     }));
@@ -47,12 +45,11 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> scanProducts(context, String search) async {
+  Future<List<Product>> scanProducts(String search) async {
     StoreData storage = StoreData();
     final response = Request(
-        url:'hproducts/products_update_v220418.php?product_code=$search',
-        token: await storage.readKey('jwt'),
-        body: '{}');
+        url: 'hproducts/products_update_v220418.php?product_code=$search',
+        token: await storage.readKey('jwt'));
     final decoded = json.decode(await response.execute('GET', (e) {
       ToastErrorHandler('Error de conexión');
     }));
