@@ -13,10 +13,11 @@ class ProductsService {
 
   Future<List<Product>> getProducts(String? filter) async {
     StoreData storage = StoreData();
+    String token = await storage.readKey('jwt');
+    if (token == '') return [];
     final response = Request(
-        url:
-            'products/products_update_v220418.php?order=$filter&limit=$_limit,$_rowsPerPage',
-        token: await storage.readKey('jwt'));
+        url: 'products/products_update_v220418.php?order=$filter&limit=0,100',
+        token: token);
     final decoded = json.decode(await response.execute('GET', (e) {
       ToastErrorHandler('Error de conexión');
     }));

@@ -13,6 +13,12 @@ class SearchingProvider extends ChangeNotifier {
 
   set searching(bool value) {
     _isSearching = value;
+    notifyListeners();
+  }
+
+  set fillProducts(List<Product> value) {
+    _products = value;
+    notifyListeners();
   }
 
   List<Product> get products => _products;
@@ -20,15 +26,18 @@ class SearchingProvider extends ChangeNotifier {
   void searchingDataFn(String value) async {
     searching = true;
     _searchingData = value;
-    _products = await productsService.searchProducts(value);
+    _products = (value == '')
+        ? await productsService.getProducts('recent')
+        : await productsService.searchProducts(value);
     _isSearching = false;
     notifyListeners();
   }
 
-  void initializeProducts() async {
-    searching = true;
-    _products = await productsService.getProducts('recent');
-    _isSearching = false;
-    notifyListeners();
+  initializeProducts() async {
+    
+      searching = true;
+      _products = await productsService.getProducts('recent');
+      searching = false;
+
   }
 }

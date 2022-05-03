@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sunlee_panama/src/providers/client_provider.dart';
+import 'package:sunlee_panama/src/providers/searching_provider.dart';
 import 'package:sunlee_panama/src/services/store/secure_store.dart';
 
 Future<String> isLogged(BuildContext context) async {
@@ -14,6 +15,8 @@ Future<String> isLogged(BuildContext context) async {
     var ClientData = Provider.of<ClientNotifier>(context, listen: false);
 
     if (await ClientData.getClientDataFromServer(token)) {
+      var searching = Provider.of<SearchingProvider>(context, listen: false);
+      await searching.initializeProducts();
       logged = 'ok';
     }
   }

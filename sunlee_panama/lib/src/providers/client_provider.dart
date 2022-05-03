@@ -27,6 +27,7 @@ class ClientNotifier extends ChangeNotifier {
   String active = '';
   String appClient = '';
   String password = '';
+  String price_permision = '0';
 
   void updateUser(Client clientData) {
     idClient = clientData.idClient;
@@ -48,6 +49,7 @@ class ClientNotifier extends ChangeNotifier {
     active = clientData.active;
     appClient = clientData.appClient;
     password = clientData.password;
+    price_permision = clientData.price_permision;
     notifyListeners();
   }
 
@@ -86,6 +88,7 @@ class ClientNotifier extends ChangeNotifier {
       'active': active,
       'appClient': appClient,
       'password': password,
+      'price_permision': price_permision,
     };
   }
 }

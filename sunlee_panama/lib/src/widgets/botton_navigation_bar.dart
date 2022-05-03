@@ -27,8 +27,12 @@ class CustomNavigationBar extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       items: items,
       onTap: (index) {
-        if (index != navigation.currentIndex) {
+        if (index >= 0 ||
+            index != navigation.currentIndex ||
+            index < items.length - 1) {
           navigation.currentIndexUpdate = index;
+        } else {
+          navigation.currentIndexUpdate = 0;
         }
       },
     );

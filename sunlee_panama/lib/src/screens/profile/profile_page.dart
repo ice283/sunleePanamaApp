@@ -129,7 +129,7 @@ class _exit extends StatelessWidget {
         onPressed: () {
           final StoreData storeJwt = StoreData();
           storeJwt.deleteAllData();
-          navigation.currentIndexUpdate = 0;
+          navigation.currentIndex = 0;
           Navigator.pushNamed(context, '/login');
         },
         child: Text('Cerrar Sesion'));

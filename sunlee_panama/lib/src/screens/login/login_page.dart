@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:sunlee_panama/src/models/clients_model.dart';
 import 'package:sunlee_panama/src/providers/client_provider.dart';
+import 'package:sunlee_panama/src/providers/searching_provider.dart';
 import 'package:sunlee_panama/src/services/http/http_handler.dart';
 import 'package:sunlee_panama/src/services/request/client_service.dart';
 import 'package:sunlee_panama/src/services/store/secure_store.dart';
@@ -124,6 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                     });
                     bool _validate = await show(context, _email, _password);
                     if (_validate) {
+                      var searching = Provider.of<SearchingProvider>(context, listen: false);
+                      await searching.initializeProducts();
                       Navigator.pushReplacementNamed(
                         context,
                         '/home',

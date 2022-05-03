@@ -25,6 +25,7 @@ class Client {
     required this.active,
     required this.appClient,
     required this.password,
+    required this.price_permision,
   });
 
   String idClient;
@@ -46,6 +47,7 @@ class Client {
   String active;
   String appClient;
   String password;
+  String price_permision;
 
   factory Client.fromJson(Map<String, dynamic> json) => Client(
         idClient: json["id_client"] == null ? '' : json["id_client"],
@@ -77,6 +79,8 @@ class Client {
         active: json["active"] == null ? '' : json["active"],
         appClient: json["app_client"] == null ? '' : json["app_client"],
         password: json["password"] == null ? '' : json["password"],
+        price_permision:
+            json["price_permision"] == null ? '0' : json["price_permision"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,5 +103,6 @@ class Client {
         "active": active,
         "app_client": appClient,
         "password": password,
+        "price_permision": price_permision,
       };
 }

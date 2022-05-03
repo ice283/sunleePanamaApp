@@ -23,8 +23,12 @@ class CartSumaryPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text('Total: \$ ' + numberFormat(cartNotifier.cart.totalCart),
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
+              (client.price_permision == '0')
+                  ? Text('Productos: ${cartNotifier.items}',
+                      style: TextStyle(fontSize: 20, color: Colors.black))
+                  : Text(
+                      'Total: \$ ' + numberFormat(cartNotifier.cart.totalCart),
+                      style: TextStyle(fontSize: 20, color: Colors.black)),
               (cartNotifier.cart.items == 0)
                   ? SizedBox(
                       width: 20,
@@ -114,13 +118,16 @@ class CartSumaryPage extends StatelessWidget {
                                         cartNotifier.cart.products[index].image,
                                     fit: BoxFit.fitWidth,
                                   ),
-                                  Text(
-                                      '\$ ' +
-                                          numberFormat(cartNotifier
-                                              .cart.products[index].price) +
-                                          ' x Und.',
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey)),
+                                  (client.price_permision == '0')
+                                      ? Container()
+                                      : Text(
+                                          '\$ ' +
+                                              numberFormat(cartNotifier
+                                                  .cart.products[index].price) +
+                                              ' x Und.',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey)),
                                 ],
                               ),
                             ),
@@ -174,12 +181,15 @@ class CartSumaryPage extends StatelessWidget {
                                         icon: Icon(Icons.delete_forever),
                                         label: Text('Borrar'),
                                       ),
-                                      Text(
-                                          '\$ ' +
-                                              numberFormat(cartNotifier
-                                                  .cart.products[index].total),
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.red)),
+                                      (client.price_permision == '0')
+                                          ? Container()
+                                          : Text(
+                                              '\$ ' +
+                                                  numberFormat(cartNotifier.cart
+                                                      .products[index].total),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.red)),
                                     ],
                                   ),
                                 ],
