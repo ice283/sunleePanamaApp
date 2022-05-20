@@ -8,7 +8,6 @@
 import 'package:connectivity_plus_web/connectivity_plus_web.dart';
 import 'package:flutter_keyboard_visibility_web/flutter_keyboard_visibility_web.dart';
 import 'package:fluttertoast/fluttertoast_web.dart';
-import 'package:url_launcher_web/url_launcher_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -17,6 +16,5 @@ void registerPlugins(Registrar registrar) {
   ConnectivityPlusPlugin.registerWith(registrar);
   FlutterKeyboardVisibilityPlugin.registerWith(registrar);
   FluttertoastWebPlugin.registerWith(registrar);
-  UrlLauncherPlugin.registerWith(registrar);
   registrar.registerMessageHandler();
 }

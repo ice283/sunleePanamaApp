@@ -176,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
       _pending = true;
     });
     if (await clientService.registerClient(
-        _email, _password, _contactName, _contactName)) {
+        _email, _password, _companyName, _contactName)) {
       setState(() {
         _pending = false;
       });

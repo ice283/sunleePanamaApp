@@ -71,14 +71,14 @@ Widget ProductGridCard(BuildContext context, Product product) {
                             'Ref: ${product.refProdCode}',
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                             ),
                           )
                         : Text(
                             '\$ ${numberFormat(product.productSalePrice)}',
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                             ),
                           ),
                     IconButton(

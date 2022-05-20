@@ -12,7 +12,7 @@ class Request {
   late String url;
   late String token;
   dynamic body = '';
-  //String _baseurl = 'http://192.168.10.147/well/sunlee/api/';
+  //String _baseurl = 'http://192.168.10.147/well/sunlee/api/'; //dev
   String _baseurl = 'http://186.188.172.22/sunlee/api/';
 
   Request({
