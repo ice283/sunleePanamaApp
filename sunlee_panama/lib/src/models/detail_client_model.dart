@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class DetailClientData {
-  late List<Balance> document = [];
-  late int facs;
+  List<Balance> document = [];
+  int facs = 0;
   int facsPending = 0;
-  late double total;
-  late double pagos;
-  late double pendientes;
+  double total = 0.0;
+  double pagos = 0.0;
+  double pendientes = 0.0;
 
   DetailClientData.fromJsonList(List<dynamic> json) {
     if (json == null) return;

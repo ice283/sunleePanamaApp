@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'dart:io';
 import 'dart:convert' as Json;
-
 import 'package:sunlee_panama/src/services/store/secure_store.dart';
 
 class Request {
@@ -89,30 +89,36 @@ class Request {
   }
 
   Future<String> execute(String method, Function(void) errorCallback) async {
+    bool result = await InternetConnectionChecker().hasConnection;
     var response = '{"message":"error"}';
-    try {
-      switch (method) {
-        case 'GET':
-          response = await getData(url: url, token: token);
-          return response;
-          break;
-        case 'POST':
-          response = await postData(url: url, token: token, body: body);
-          return response;
-          break;
-        case 'PUT':
-          response = await putData(url: url, token: token, body: body);
-          return response;
-          break;
-        case 'DELETE':
-          response = await deleteData(url: url, token: token);
-          return response;
-          break;
+    if (result) {
+      try {
+        switch (method) {
+          case 'GET':
+            response = await getData(url: url, token: token);
+            return response;
+            break;
+          case 'POST':
+            response = await postData(url: url, token: token, body: body);
+            return response;
+            break;
+          case 'PUT':
+            response = await putData(url: url, token: token, body: body);
+            return response;
+            break;
+          case 'DELETE':
+            response = await deleteData(url: url, token: token);
+            return response;
+            break;
+        }
+        return response;
+      } catch (e) {
+        errorCallback(e);
+        return response;
       }
-      return response;
-    } catch (e) {
-      errorCallback(e);
-      return response;
+    } else {
+      //errorCallback("Sin Conexion");
+      return '{"error":"Sin Conexion","error_code":5001}';
     }
   }
 }

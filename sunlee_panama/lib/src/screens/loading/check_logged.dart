@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sunlee_panama/src/providers/client_provider.dart';
 import 'package:sunlee_panama/src/providers/searching_provider.dart';
 import 'package:sunlee_panama/src/services/store/secure_store.dart';
+import 'package:sunlee_panama/src/utils/error_handler.dart';
 
 Future<String> isLogged(BuildContext context) async {
   String logged = '';
@@ -19,6 +20,8 @@ Future<String> isLogged(BuildContext context) async {
       await searching.initializeProducts();
       logged = 'ok';
     }
+  } else {
+    ToastErrorHandler('Debe Loguearse');
   }
   return logged;
 }

@@ -130,6 +130,9 @@ class ClientService {
         case 1003:
           ToastErrorHandler('Cuenta Inactiva');
           break;
+        case 5001:
+          ToastErrorHandler('Sin acceso a Internet');
+          break;
         default:
           ToastErrorHandler('Error desconocido');
       }

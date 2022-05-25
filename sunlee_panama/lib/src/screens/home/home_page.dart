@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     var ClientData = Provider.of<ClientNotifier>(context, listen: true);
     var navigation = Provider.of<NavigationProvider>(context, listen: true);
     var searching = Provider.of<SearchingProvider>(context, listen: true);
+
     Future<void> _getProducts(String query) async {
       debouncer.value = query;
       searching.searchingDataFn(await debouncer.nextValue);
