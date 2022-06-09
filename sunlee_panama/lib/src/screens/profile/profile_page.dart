@@ -8,6 +8,7 @@ import 'package:sunlee_panama/src/services/store/secure_store.dart';
 import 'package:sunlee_panama/src/utils/error_handler.dart';
 import 'package:sunlee_panama/src/utils/validator_fn.dart';
 import 'package:sunlee_panama/src/widgets/formField_data.dart';
+import 'package:sunlee_panama/src/widgets/unregisterbtn_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -109,6 +110,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: _exit(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: unregisterBtn(),
                 ),
               ],
             ),

@@ -33,7 +33,7 @@ class _GridWidgetState extends State<GridWidget> {
     return SfDataGrid(
       source: source,
       columns: header,
-      onQueryRowHeight: (details) => 30.0,
+      onQueryRowHeight: (details) => 40.0,
       allowSorting: true,
       onCellDoubleTap: (e) {
         onTap(e);

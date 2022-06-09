@@ -94,6 +94,36 @@ class ClientService {
     }
   }
 
+  Future<bool> unregisterClient(String _email, String _password) async {
+    StoreData storage = StoreData();
+    Map _body = {
+      'action': 'unregister',
+      'client_mail': _email,
+      'password': _password,
+    };
+    final request = Request(url: 'auth/client.php', token: '');
+    request.setBody = _body;
+    final decoded = json.decode(await request.execute('POST', (e) {
+      ToastErrorHandler('Error de conexión');
+    }));
+    if (decoded['error'] == '') {
+      ToastErrorHandler('Se ha Eliminado con exito la cuenta');
+      return true;
+    } else {
+      switch (decoded['error_code']) {
+        case 1002:
+          ToastErrorHandler('Campos Vacios');
+          break;
+        case 1001:
+          ToastErrorHandler('Correo ya existe');
+          break;
+        default:
+          ToastErrorHandler('Error desconocido');
+      }
+      return false;
+    }
+  }
+
   Future<bool> loginClient(
       BuildContext context, String _email, String _password) async {
     StoreData storage = StoreData();

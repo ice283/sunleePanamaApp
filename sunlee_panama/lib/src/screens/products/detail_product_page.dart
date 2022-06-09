@@ -80,7 +80,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       icon: Icon(Icons.add),
                       color: Colors.grey[700]),
                   Container(
-                    width: 80,
+                    width: 70,
                     height: 50,
                     child: TextField(
                       style: TextStyle(fontSize: 16.0),
@@ -138,6 +138,13 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       image: product.getImgUrl(),
                       quantity: _quantity,
                     ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('Agregado A la Cesta ${product.productName}'),
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
                   },
                   child: Text('Agregar al Pedido'),
                 ),
@@ -168,6 +175,48 @@ class _DetailProductPageState extends State<DetailProductPage> {
                         'assets/images/logo.png',
                         fit: BoxFit.fitWidth,
                         height: 40.0,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                          color:
+                              (product.exist > 0) ? Colors.green : Colors.red,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                (product.exist > 0)
+                                    ? Icons.check_circle
+                                    : Icons.cancel,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                (product.exist > 0) ? 'Disponible' : 'Agotado',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),

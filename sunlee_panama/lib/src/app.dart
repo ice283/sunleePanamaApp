@@ -7,6 +7,7 @@ import 'package:sunlee_panama/src/screens/login/login_page.dart';
 import 'package:sunlee_panama/src/screens/orders/document_page.dart';
 import 'package:sunlee_panama/src/screens/products/detail_product_page.dart';
 import 'package:sunlee_panama/src/screens/register/register_page.dart';
+import 'package:sunlee_panama/src/screens/unregister/unregister_page.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/detailProduct': (BuildContext context) => DetailProductPage(),
         '/cart': (BuildContext context) => CartSumaryPage(),
         '/document': (BuildContext context) => DocumentPage(),
+        '/unregister': (BuildContext context) => UnRegisterPage(),
       },
     );
   }

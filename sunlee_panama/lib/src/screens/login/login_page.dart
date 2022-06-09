@@ -125,7 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                     });
                     bool _validate = await show(context, _email, _password);
                     if (_validate) {
-                      var searching = Provider.of<SearchingProvider>(context, listen: false);
+                      var searching = Provider.of<SearchingProvider>(context,
+                          listen: false);
                       await searching.initializeProducts();
                       Navigator.pushReplacementNamed(
                         context,
@@ -180,9 +181,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                 child: Text(
-                  'Olvidaste tu Clave?',
+                  'Eliminar mi Cuenta',
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/unregister',
+                  );
+                },
               ),
               SizedBox(
                 width: 25.0,

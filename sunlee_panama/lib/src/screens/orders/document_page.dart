@@ -7,6 +7,8 @@ class DocumentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double wh = MediaQuery.of(context).size.width;
+
     Map<String, dynamic> datos =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     ClientService detailClient = ClientService();
@@ -26,7 +28,7 @@ class DocumentPage extends StatelessWidget {
             return _buildError();
           }
           if (snapshot.hasData) {
-            return _buildDataView(snapshot.data, datos);
+            return _buildDataView(snapshot.data, datos, wh);
           }
           return _buildNoData();
         },
@@ -34,12 +36,12 @@ class DocumentPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDataView(dt, datos) {
+  Widget _buildDataView(dt, datos, wh) {
     return Container(
       child: ListView(
         children: [
           _header(dt[0], datos),
-          _body(dt[1]),
+          _body(dt[1], wh),
           _footer(dt[0], datos),
         ],
       ),
@@ -133,7 +135,7 @@ class DocumentPage extends StatelessWidget {
     );
   }
 
-  Widget _body(dt) {
+  Widget _body(dt, wh) {
     List<Widget> list = [];
     list.add(
       Row(
@@ -141,19 +143,19 @@ class DocumentPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-              width: 200,
+              width: wh * 0.4,
               child: Text(
                 'Nombre',
                 style: TextStyle(fontSize: 12.0),
               )),
           Container(
-              width: 40,
+              width: wh * 0.1,
               child: Text(
                 'Cant.',
                 style: TextStyle(fontSize: 12.0),
               )),
           Container(
-              width: 80,
+              width: wh * 0.2,
               child: Text(
                 'Precio',
                 style: TextStyle(fontSize: 12.0),
@@ -188,20 +190,20 @@ class DocumentPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                  width: 200,
+                  width: wh * 0.4,
                   child: Text(
                     dt[i.toString()]['product_name_temp'].toString(),
                     style: TextStyle(fontSize: 12.0),
                   )),
               Container(
-                  width: 40,
+                  width: wh * 0.1,
                   child: Text(
                     dt[i.toString()]['quantity_product'].toString(),
                     textAlign: TextAlign.right,
                     style: TextStyle(fontSize: 12.0),
                   )),
               Container(
-                  width: 80,
+                  width: wh * 0.25,
                   child: Text(
                     '\$ ' +
                         numberFormat(

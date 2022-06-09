@@ -13,9 +13,19 @@ class productList extends StatefulWidget {
 
 class _productListState extends State<productList>
     with AutomaticKeepAliveClientMixin<productList> {
+  ScrollController scrollController = ScrollController(keepScrollOffset: true);
+  bool showbtn = false;
+  bool _isSearching = false;
   @override
   void initState() {
+    scrollController.addListener(() => _scrollListener(context));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(() => _scrollListener(context));
+    super.dispose();
   }
 
   @override
@@ -28,20 +38,38 @@ class _productListState extends State<productList>
         : (searching.products.length == 0)
             ? Center(child: Text('No hay resultados'))
             : GridView.builder(
+                controller: scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 5.0,
                   crossAxisSpacing: 5.0,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.60,
                   crossAxisCount: 2,
                 ),
-                itemCount: searching.products.length,
+                itemCount: searching.products.length + 1,
                 padding: EdgeInsets.all(8.0),
                 itemBuilder: (BuildContext context, int index) {
-                  return ProductGridCard(context, searching.products[index]);
+                  return (index < searching.products.length)
+                      ? ProductGridCard(context, searching.products[index])
+                      : (searching.loadingMore)
+                          ? LoadingWidget()
+                          : Container(
+                              height: 10,
+                            );
                 },
               );
   }
 
   @override
   bool get wantKeepAlive => true;
+
+  _scrollListener(BuildContext context) {
+    var searching = Provider.of<SearchingProvider>(context, listen: false);
+    if (scrollController.positions.isNotEmpty) {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent - 100 &&
+          !scrollController.position.outOfRange) {
+        searching.loadMore(searching.searchData);
+      }
+    }
+  }
 }
