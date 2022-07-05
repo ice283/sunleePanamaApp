@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sunlee_panama/src/providers/client_provider.dart';
 import 'package:sunlee_panama/src/providers/navigation_provider.dart';
 import 'package:sunlee_panama/src/providers/searching_provider.dart';
+import 'package:sunlee_panama/src/screens/dashboard/dashboard_page.dart';
 import 'package:sunlee_panama/src/screens/orders/order_page.dart';
 import 'package:sunlee_panama/src/screens/products/products_page.dart';
 import 'package:sunlee_panama/src/screens/profile/profile_page.dart';
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                         setState(() {});
                       },
                       onChanged: (value) async {
-                        navigation.currentIndexUpdate = 0;
+                        navigation.currentIndexUpdate = 1;
                         _getProducts(_searchController.text);
                         setState(() {});
                       },
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                                 : SizedBox(width: 0),
                             IconButton(
                                 onPressed: () {
-                                  navigation.currentIndexUpdate = 0;
+                                  navigation.currentIndexUpdate = 1;
                                   searching
                                       .searchingDataFn(_searchController.text);
                                 },
@@ -145,6 +146,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> pages = [
+    DashboardPage(),
     productList(),
     OrderPage(),
     ProfilePage(),

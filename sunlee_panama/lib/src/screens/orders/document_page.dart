@@ -91,10 +91,6 @@ class DocumentPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  headerLine('CLIENTE: ', datos['client_name'].toString()),
-                  Divider(
-                    thickness: 2,
-                  ),
                   headerLine('NRO. DOCUMENTO: ', dt['num_document'].toString()),
                   Divider(
                     thickness: 2,

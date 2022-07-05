@@ -10,6 +10,10 @@ class CustomNavigationBar extends StatelessWidget {
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.list_alt),
+      label: 'Productos',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.price_change_rounded),
       label: 'Balance',
     ),
     BottomNavigationBarItem(

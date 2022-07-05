@@ -8,6 +8,9 @@ class SearchingProvider extends ChangeNotifier {
   bool _loadingMore = false;
   ProductsService productsService = ProductsService();
   List<Product> _products = [];
+  List<Product> _most_wanted = [];
+  List<Product> _recomended = [];
+  List<Product> _buyed = [];
   String _SelectedCategory = "0";
   List<dynamic> _categories = [];
   int _current_page = 1;
@@ -38,6 +41,9 @@ class SearchingProvider extends ChangeNotifier {
   }
 
   List<Product> get products => _products;
+  List<Product> get wanted => _most_wanted;
+  List<Product> get buyed => _buyed;
+  List<Product> get recomended => _recomended;
 
   List<dynamic> get categories => _categories;
 
@@ -78,6 +84,9 @@ class SearchingProvider extends ChangeNotifier {
     _current_page = 1;
     loadCategories();
     _products = await productsService.getProducts('recent', _SelectedCategory);
+    _buyed = await productsService.getMostBuyed();
+    _most_wanted = await productsService.getMostWanted();
+    _recomended = await productsService.getRecomended();
     searching = false;
   }
 }

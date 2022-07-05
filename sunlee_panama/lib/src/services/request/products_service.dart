@@ -70,6 +70,54 @@ class ProductsService {
     }
   }
 
+  Future<List<Product>> getMostBuyed() async {
+    StoreData storage = StoreData();
+    final response = Request(
+        url: 'products/products_update_v220418.php?most_sold=true',
+        token: await storage.readKey('jwt'));
+    final decoded = json.decode(await response.execute('GET', (e) {
+      ToastErrorHandler('Error de conexión');
+    }));
+    if (decoded['message'] == 'ok') {
+      final peliculas = Products.fromJsonList(decoded['response']);
+      return peliculas.items;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<Product>> getRecomended() async {
+    StoreData storage = StoreData();
+    final response = Request(
+        url: 'products/products_update_v220418.php?recommended=true',
+        token: await storage.readKey('jwt'));
+    final decoded = json.decode(await response.execute('GET', (e) {
+      ToastErrorHandler('Error de conexión');
+    }));
+    if (decoded['message'] == 'ok') {
+      final peliculas = Products.fromJsonList(decoded['response']);
+      return peliculas.items;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<Product>> getMostWanted() async {
+    StoreData storage = StoreData();
+    final response = Request(
+        url: 'products/products_update_v220418.php?most_wanted=true',
+        token: await storage.readKey('jwt'));
+    final decoded = json.decode(await response.execute('GET', (e) {
+      ToastErrorHandler('Error de conexión');
+    }));
+    if (decoded['message'] == 'ok') {
+      final peliculas = Products.fromJsonList(decoded['response']);
+      return peliculas.items;
+    } else {
+      return [];
+    }
+  }
+
   Future<List<dynamic>> getCategories() async {
     StoreData storage = StoreData();
     final response = Request(

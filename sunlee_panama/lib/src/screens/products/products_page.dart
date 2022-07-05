@@ -40,8 +40,8 @@ class _productListState extends State<productList>
             : GridView.builder(
                 controller: scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 5.0,
-                  crossAxisSpacing: 5.0,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
                   childAspectRatio: 0.60,
                   crossAxisCount: 2,
                 ),

@@ -49,126 +49,132 @@ class _OrderPageState extends State<OrderPage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Card(
-                  color: Color(0xFFD00000),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(0),
                   ),
-                  elevation: 5.0,
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Balance',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Balance',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '\$' + numberFormat(client.pendientes),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                '\$' + numberFormat(client.pendientes),
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 32.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Saldo Pendiente',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
+                              Text(
+                                'Saldo Pendiente',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 12.0,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Codigo Cliente',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Expanded(child: Center()),
-                            Text(
-                              headerDataClient.codeClient.toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ],
+                        Divider(
+                          color: Colors.grey,
                         ),
-                      ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Facturas Pendientes',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Codigo Cliente',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                ),
                               ),
-                            ),
-                            Expanded(child: Center()),
-                            Text(
-                              client.facsPending.toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
+                              Expanded(child: Center()),
+                              Text(
+                                headerDataClient.codeClient.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Solo Facturas Pendientes',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Expanded(child: Center()),
-                            Switch(
-                              value: _pending,
-                              onChanged: (e) {
-                                _pending = e;
-                                setState(() {});
-                              },
-                              activeColor: Colors.white,
-                            ),
-                          ],
+                        Divider(
+                          color: Colors.grey,
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Facturas Pendientes',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              Expanded(child: Center()),
+                              Text(
+                                client.facsPending.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Solo Facturas Pendientes',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              Expanded(child: Center()),
+                              Switch(
+                                value: _pending,
+                                onChanged: (e) {
+                                  _pending = e;
+                                  setState(() {});
+                                },
+                                activeColor: Colors.red,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -199,6 +205,7 @@ class _OrderPageState extends State<OrderPage> {
     List<Map<String, dynamic>> _columns = [];
     List<Map<String, dynamic>> _data = [];
     //inicializo los datos
+    _columns.add({'name': 'DOC', 'id': 'btn', 'width': 50.0});
     _columns.add({'name': 'FECHA', 'id': 'date', 'width': 85.0});
     _columns.add({'name': 'REF', 'id': 'doc', 'width': 65.0});
     _columns.add({'name': 'MONTO', 'id': 'amount', 'width': 75.0});
@@ -206,7 +213,7 @@ class _OrderPageState extends State<OrderPage> {
     _columns.add({'name': 'BAL', 'id': 'balance', 'width': 75.0});
     _columns.add({'name': 'D', 'id': 'days', 'width': 60.0});
     double _bl = 0.0;
-    client.document.sort((a, b) => a.idDocument.compareTo(b.idDocument));
+    //client.document.sort((a, b) => a.idDocument.compareTo(b.idDocument));
     client.document.forEach((element) {
       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
       DateTime dateTime = dateFormat.parse(element.docDate.toString());
@@ -216,9 +223,9 @@ class _OrderPageState extends State<OrderPage> {
           (element.pending > 0 && element.overCredit == 1) ? true : false;
       final line = {
         'id': element.idDocument,
+        'btn': element.idDocument,
         'client_name': element.clientName,
         'seller_name': '',
-        'id': element.idDocument,
         'date': fecha.toString(),
         'doc': element.numDocument,
         'days': (element.pending > 0) ? element.since : 0,
@@ -258,23 +265,17 @@ class _OrderPageState extends State<OrderPage> {
           rows: _data,
           onTap: (DataGridCellDoubleTapDetails e) {
             int line = e.rowColumnIndex.rowIndex - 1;
-            goto(
+            print(
+              _data[line]['doc'].toString(),
+            );
+            /*goto(
                 context,
                 _data[line]['id'].toString(),
                 _data[line]['client_name'].toString(),
-                _data[line]['seller_name'].toString());
+                _data[line]['seller_name'].toString());*/
           },
         ),
       );
     }
   }
-}
-
-void goto(
-    BuildContext context, String e, String client_name, String seller_name) {
-  Navigator.pushNamed(context, '/document', arguments: {
-    'id_document': e,
-    'client_name': client_name,
-    'seller_name': seller_name
-  });
 }

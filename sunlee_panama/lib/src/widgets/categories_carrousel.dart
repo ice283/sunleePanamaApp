@@ -11,8 +11,8 @@ class CategoriesCarrousel extends StatelessWidget {
     var searching = Provider.of<SearchingProvider>(context, listen: true);
     var navigation = Provider.of<NavigationProvider>(context, listen: true);
     gotoTap() {
-      if (navigation.currentIndex != 0) {
-        navigation.currentIndexUpdate = 0;
+      if (navigation.currentIndex != 1) {
+        navigation.currentIndexUpdate = 1;
       }
     }
 

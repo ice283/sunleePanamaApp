@@ -52,15 +52,13 @@ class _DetailProductPageState extends State<DetailProductPage> {
       floatingActionButton: Container(
         width: width * 0.95,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0),
-            color: Colors.grey[100],
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 5,
-                spreadRadius: 3,
-              ),
-            ]),
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black12,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(0),
+        ),
         height: 80,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -187,7 +185,6 @@ class _DetailProductPageState extends State<DetailProductPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
                           ),
                           color:
                               (product.exist > 0) ? Colors.green : Colors.red,
@@ -251,15 +248,13 @@ class Description extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.95,
           //color: Colors.black54,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(0),
-              color: Colors.grey[100],
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 5,
-                  spreadRadius: 3,
-                ),
-              ]),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.black12,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(0),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

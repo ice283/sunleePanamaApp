@@ -13,10 +13,14 @@ Widget ProductGridCard(BuildContext context, Product product) {
   var cartData = Provider.of<CartNotifier>(context, listen: false);
   var ClientData = Provider.of<ClientNotifier>(context, listen: true);
   bool isAvalible = (product.exist > 0) ? true : false;
-  return Card(
-    elevation: 2.0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(0.0),
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(
+        color: Colors.black12,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(0),
     ),
     child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -56,7 +60,6 @@ Widget ProductGridCard(BuildContext context, Product product) {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
                     color: (product.exist > 0) ? Colors.green : Colors.red,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sunlee_panama/src/widgets/btn_view_document.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class GridWidget extends StatefulWidget {
@@ -35,9 +36,6 @@ class _GridWidgetState extends State<GridWidget> {
       columns: header,
       onQueryRowHeight: (details) => 40.0,
       allowSorting: true,
-      onCellDoubleTap: (e) {
-        onTap(e);
-      },
     );
   }
 
@@ -93,16 +91,24 @@ class DataSource extends DataGridSource {
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
-      TextStyle? getTextStyle() {
-        if (e.columnName == 'days' && e.value >= 30) {
-          return const TextStyle(
-            fontSize: 12.0,
-            color: Colors.red,
+      Widget? getWidget() {
+        if (e.columnName == 'btn') {
+          return BtnDocument(id: e.value.toString());
+        } else if (e.columnName == 'days' && e.value >= 30) {
+          return Text(
+            e.value.toString(),
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.red,
+            ),
           );
         } else {
-          return const TextStyle(
-            fontSize: 12.0,
-            color: Colors.black,
+          return Text(
+            e.value.toString(),
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.black,
+            ),
           );
         }
       }
@@ -110,10 +116,7 @@ class DataSource extends DataGridSource {
       return Container(
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-        child: Text(
-          e.value.toString(),
-          style: getTextStyle(),
-        ),
+        child: getWidget(),
       );
     }).toList());
   }
